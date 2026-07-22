@@ -1,0 +1,41 @@
+.btn-list {
+  display: flex;
+  justify-content: space-between;
+
+  @media screen and (min-width: 768px) {
+    justify-content: center;
+    gap: 32px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    gap: 16px;
+  }
+}
+
+.btn {
+  width: 129px;
+  height: 44px;
+  text-align: center;
+  line-height: calc(16 / 12);
+  text-transform: uppercase;
+  color: #ffffff;
+
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+
+  @media screen and (min-width: 768px) {
+    width: 152px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 148px;
+    height: 42px;
+  }
+}
+
+.btn--active {
+  background-color: #ff6b01;
+  box-shadow: 0 8px 43px 0 rgba(255, 107, 1, 0.6);
+  border: none;
+}
