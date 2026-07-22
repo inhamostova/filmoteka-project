@@ -1,0 +1,17 @@
+.err-msg {
+  position: absolute;
+  bottom: 44px;
+
+  max-width: 280px;
+
+  font-size: 14px;
+  line-height: calc(16 / 14);
+  font-weight: 400;
+  color: #ff001b;
+
+  @media screen and (min-width: 768px) {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 100%;
+  }
+}

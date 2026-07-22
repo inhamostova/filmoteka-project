@@ -1,0 +1,15 @@
+.nav__list {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.nav__list__link {
+  line-height: calc(14 / 12);
+  color: #ffffff;
+  text-transform: uppercase;
+
+  &.current {
+    border-bottom: 3px solid #ff001b;
+  }
+}
