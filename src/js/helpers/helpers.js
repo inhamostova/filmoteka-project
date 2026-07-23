@@ -6,4 +6,12 @@ function showEl(el) {
   el.classList.remove('visually-hidden');
 }
 
-export { showEl, hideEl };
+function trimDate(date) {
+  return date.slice(0, 4);
+}
+
+function sliceEl(str) {
+  return str.toString().slice(0, 3);
+}
+
+export { showEl, hideEl, trimDate, sliceEl };
