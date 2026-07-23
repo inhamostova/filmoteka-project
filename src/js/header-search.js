@@ -1,26 +1,23 @@
 import { hideEl, showEl } from './helpers/helpers';
 
 const searchForm = document.querySelector('.search-form');
-const errMsg = document.querySelector('.search-form__error');
+const errorMessage = document.querySelector('.search-form__error');
 
 searchForm.addEventListener('submit', onSearchSubmit);
 
 function onSearchSubmit(evt) {
   evt.preventDefault();
 
-  let {
-    searchQuery: { value: query },
-  } = evt.target.elements;
-
-  query = query.trim();
+  const form = evt.currentTarget;
+  const query = form.elements.searchQuery.value.trim();
 
   if (!query) {
-    showEl(errMsg);
-    evt.target.reset();
+    showEl(errorMessage);
+    form.reset();
     return;
   }
 
+  hideEl(errorMessage);
   console.log(query);
-  hideEl(errMsg);
-  evt.target.reset();
+  form.reset();
 }
