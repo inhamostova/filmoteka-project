@@ -1,0 +1,2 @@
+!function(){function e(e){e.classList.add("visually-hidden")}var r=document.querySelector(".search-form"),t=document.querySelector(".search-form__error");r.addEventListener("submit",(function(r){r.preventDefault();var n=r.currentTarget,s=n.elements.searchQuery.value.trim();if(!s)return t.classList.remove("visually-hidden"),void n.reset();e(t),console.log(s),n.reset()}))}();
+//# sourceMappingURL=index.b6e8d7e7.js.map

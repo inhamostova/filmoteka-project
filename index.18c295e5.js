@@ -1,0 +1,2 @@
+function e(e){e.classList.add("visually-hidden")}const r=document.querySelector(".search-form"),t=document.querySelector(".search-form__error");r.addEventListener("submit",(function(r){r.preventDefault();const s=r.currentTarget,n=s.elements.searchQuery.value.trim();if(!n)return t.classList.remove("visually-hidden"),void s.reset();e(t),console.log(n),s.reset()}));
+//# sourceMappingURL=index.18c295e5.js.map
