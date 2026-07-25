@@ -5,27 +5,27 @@ const API_TOKEN =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTdiNGRiMmFiZTcwNGY0Njk1NjdhNmZjZTM4NzA5NyIsIm5iZiI6MTY3MTEzNTI3NC4yNDEsInN1YiI6IjYzOWI4MDJhY2I5ZjRiMDBiMWQ3MDU0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QzbVo_qbZnszsGvllQ67Bu45o2b6F5lCxocbnK73Lck';
 
 export async function fetchTrendingMovies() {
-  const { data } = await axios.get(
-    `${BASE_URL}/trending/movie/day?language=en-US`,
-    {
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${API_TOKEN}`,
-      },
-    }
-  );
+  const { data } = await axios.get(`${BASE_URL}/trending/movie/day`, {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+    params: {
+      language: 'en-US',
+    },
+  });
   return data;
 }
 
 export async function fetchGenres() {
-  const { data } = await axios.get(
-    'https://api.themoviedb.org/3/genre/movie/list?language=en',
-    {
-      headers: {
-        accept: 'application/json',
-        Authorization: `Bearer ${API_TOKEN}`,
-      },
-    }
-  );
+  const { data } = await axios.get(`${BASE_URL}/genre/movie/list`, {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+    params: {
+      language: 'en',
+    },
+  });
   return data.genres;
 }

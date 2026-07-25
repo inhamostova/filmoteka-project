@@ -1,5 +1,5 @@
 import { trimDate, sliceEl } from '../helpers/helpers';
-import { getGenresById } from '../helpers/getGenresByIds';
+import { getGenresByIds } from '../helpers/getGenresByIds';
 
 const BASE_IMG_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -16,7 +16,7 @@ export function createMovieCardsMarkup(movies, allGenres) {
       <img class="movie-poster" src="${BASE_IMG_URL}${poster_path}" alt="${title}" />
       <h2 class="movie-title">${title}</h2>
 <div class="movie-info">
-      <p class="movie-genres">${getGenresById(genre_ids, allGenres)}</p>
+      <p class="movie-genres">${getGenresByIds(genre_ids, allGenres)}</p>
       <p class="movie-date">${trimDate(release_date)}</p>
       <p class="movie-rating">${sliceEl(vote_average)}</p>
 </div>
