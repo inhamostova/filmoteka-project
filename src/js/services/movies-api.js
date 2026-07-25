@@ -16,3 +16,16 @@ export async function fetchTrendingMovies() {
   );
   return data;
 }
+
+export async function fetchGenres() {
+  const { data } = await axios.get(
+    'https://api.themoviedb.org/3/genre/movie/list?language=en',
+    {
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${API_TOKEN}`,
+      },
+    }
+  );
+  return data.genres;
+}
