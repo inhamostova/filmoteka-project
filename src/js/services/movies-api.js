@@ -24,8 +24,22 @@ export async function fetchGenres() {
       Authorization: `Bearer ${API_TOKEN}`,
     },
     params: {
-      language: 'en',
+      language: 'en-US',
     },
   });
   return data.genres;
+}
+
+export async function fetchMoviesByQuery(query) {
+  const { data } = await axios.get(`${BASE_URL}/search/movie`, {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+    params: {
+      query,
+      language: 'en-US',
+    },
+  });
+  return data.results;
 }

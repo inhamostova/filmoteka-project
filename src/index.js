@@ -1,3 +1,3 @@
-import './js/header-search';
+import './js/searchMovies';
 
 import './js/trending';
