@@ -29,3 +29,16 @@ export async function fetchGenres() {
   });
   return data.genres;
 }
+
+export async function fetchMoviesByQuery(query) {
+  const { data } = await axios.get(`${BASE_URL}/search/movie`, {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+    params: {
+      query,
+    },
+  });
+  return data.results;
+}
