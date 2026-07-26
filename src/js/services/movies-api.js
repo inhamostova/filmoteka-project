@@ -24,7 +24,7 @@ export async function fetchGenres() {
       Authorization: `Bearer ${API_TOKEN}`,
     },
     params: {
-      language: 'en',
+      language: 'en-US',
     },
   });
   return data.genres;
@@ -38,6 +38,7 @@ export async function fetchMoviesByQuery(query) {
     },
     params: {
       query,
+      language: 'en-US',
     },
   });
   return data.results;
