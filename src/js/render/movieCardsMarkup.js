@@ -8,11 +8,12 @@ export function createMovieCardsMarkup(movies, allGenres) {
     .map(
       ({
         title,
+        id,
         poster_path,
         genre_ids,
         release_date,
         vote_average,
-      }) => `<li class="gallery-list__item">
+      }) => `<li class="gallery-list__item" data-id="${id}">
       <img class="movie-poster" src="${BASE_IMG_URL}${poster_path}" alt="${title}" />
       <h2 class="movie-title">${title}</h2>
 <div class="movie-info">
