@@ -43,3 +43,16 @@ export async function fetchMoviesByQuery(query) {
   });
   return data.results;
 }
+
+export async function fetchMovieById(movieId) {
+  const res = await axios.get(`${BASE_URL}/movie/${movieId}`, {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_TOKEN}`,
+    },
+    params: {
+      language: 'en-US',
+    },
+  });
+  return res.data;
+}

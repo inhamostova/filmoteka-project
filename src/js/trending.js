@@ -1,5 +1,5 @@
 import { fetchTrendingMovies, fetchGenres } from './services/movies-api';
-import { createMovieCardsMarkup } from './render/movieCardsMarkup.js';
+import { createMovieCardsMarkup } from './render/movieCardsMarkup';
 
 const gallery = document.querySelector('.js-gallery');
 
@@ -10,7 +10,7 @@ async function loadTrendingMovies() {
 
     gallery.innerHTML = createMovieCardsMarkup(data.results, genres);
   } catch (error) {
-    console.error(error.message);
+    console.error(error);
   }
 }
 
