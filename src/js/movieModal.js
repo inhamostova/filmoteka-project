@@ -17,12 +17,15 @@ const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');
 const backdrop = document.querySelector('.backdrop');
 
-const watchedMovies = getWatchedMovies() ?? [];
-const queueMovies = getQueueMovies() ?? [];
+// const watchedMovies = getWatchedMovies() ?? [];
+// const queueMovies = getQueueMovies() ?? [];
 
 gallery.addEventListener('click', onGalleryClick);
 
 async function onGalleryClick(evt) {
+  const watchedMovies = getWatchedMovies();
+  const queueMovies = getQueueMovies();
+
   const card = evt.target.closest('.gallery-list__item');
   if (!card) return;
   const id = Number(card.dataset.id);
@@ -49,25 +52,27 @@ async function onGalleryClick(evt) {
     backdrop.addEventListener('click', onBackdropClick);
 
     btnQueue.addEventListener('click', () => {
-      btnQueue.textContent = 'Remove from queue';
-
       if (isMovieInQueue(queueMovies, id)) {
         removeFromQueue(queueMovies, id);
         saveQueueMovies(queueMovies);
         btnQueue.textContent = 'add to queue';
         return;
+      } else {
+        btnQueue.textContent = 'Remove from queue';
       }
       addToQueue(queueMovies, movie);
       saveQueueMovies(queueMovies);
     });
 
     btnWatched.addEventListener('click', () => {
-      btnWatched.textContent = 'Remove from watched';
+      //   btnWatched.textContent = 'Remove from watched';
       if (isMovieInWatched(watchedMovies, id)) {
         removeFromWatched(watchedMovies, id);
         saveWatchedMovies(watchedMovies);
         btnWatched.textContent = 'add to watched';
         return;
+      } else {
+        btnWatched.textContent = 'Remove from watched';
       }
       addToWatched(watchedMovies, movie);
       saveWatchedMovies(watchedMovies);

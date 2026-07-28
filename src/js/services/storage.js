@@ -1,5 +1,8 @@
 export function removeFromWatched(arr, id) {
   const idxMovieToDelete = arr.findIndex(({ id: movieId }) => movieId === id);
+
+  if (idxMovieToDelete === -1) return;
+
   arr.splice(idxMovieToDelete, 1);
 }
 
@@ -12,7 +15,7 @@ export function saveWatchedMovies(arr) {
 }
 
 export function getWatchedMovies() {
-  return JSON.parse(localStorage.getItem('watchedMovies'));
+  return JSON.parse(localStorage.getItem('watchedMovies')) ?? [];
 }
 
 export function isMovieInWatched(arr, id) {
@@ -21,6 +24,7 @@ export function isMovieInWatched(arr, id) {
 
 export function removeFromQueue(arr, id) {
   const idxMovieToDelete = arr.findIndex(({ id: movieId }) => movieId === id);
+  if (idxMovieToDelete === -1) return;
   arr.splice(idxMovieToDelete, 1);
 }
 
@@ -33,7 +37,7 @@ export function saveQueueMovies(arr) {
 }
 
 export function getQueueMovies() {
-  return JSON.parse(localStorage.getItem('queueMovies'));
+  return JSON.parse(localStorage.getItem('queueMovies')) ?? [];
 }
 
 export function isMovieInQueue(arr, id) {
