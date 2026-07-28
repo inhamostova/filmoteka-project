@@ -14,4 +14,19 @@ function sliceEl(str) {
   return str.toString().slice(0, 3);
 }
 
-export { showEl, hideEl, trimDate, sliceEl };
+function addActiveBtnClass(btn) {
+  btn.classList.add('btn--active');
+}
+
+function removeActiveBtnClass(btn) {
+  btn.classList.remove('btn--active');
+}
+
+export {
+  showEl,
+  hideEl,
+  trimDate,
+  sliceEl,
+  removeActiveBtnClass,
+  addActiveBtnClass,
+};
