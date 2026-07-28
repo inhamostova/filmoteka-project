@@ -25,8 +25,8 @@ export function createMovieModalMarkup(movie) {
     <h3 class="modal__about">About </h3>
     <p class="modal__descr">${overview}</p>
     <ul class="modal-btn-list">
-      <li class="modal-btn-list__item"><button class="modal__btn primary" type="button">add to Watched</button></li>
-      <li class="modal-btn-list__item"><button class="modal__btn secondary" type="button">add to queue</button></li>
+      <li class="modal-btn-list__item"><button class="modal__btn primary" data-btn="watched" type="button">add to Watched</button></li>
+      <li class="modal-btn-list__item"><button class="modal__btn secondary" data-btn="queue" type="button">add to queue</button></li>
     </ul>
 </div>`;
 }
