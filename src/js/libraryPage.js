@@ -1,7 +1,6 @@
 import { getWatchedMovies, getQueueMovies } from './services/storage';
 import { createMovieCardsMarkup } from './render/movieCardsMarkup';
 import { fetchGenres } from './services/movies-api';
-import { addActiveBtnClass, removeActiveBtnClass } from './helpers/helpers';
 
 const btnWatched = document.querySelector('[data-btn="watched"]');
 const btnQueue = document.querySelector('[data-btn="queue"]');
@@ -20,13 +19,17 @@ btnQueue.addEventListener('click', onBtnQueueClick);
 btnWatched.addEventListener('click', onBtnWatchedClick);
 
 function onBtnQueueClick() {
-  addActiveBtnClass(btnQueue);
-  removeActiveBtnClass(btnWatched);
+  updateActiveButton('queue');
   gallery.innerHTML = createMovieCardsMarkup(getQueueMovies(), genresList);
 }
 
 function onBtnWatchedClick() {
-  addActiveBtnClass(btnWatched);
-  removeActiveBtnClass(btnQueue);
+  updateActiveButton('watched');
   gallery.innerHTML = createMovieCardsMarkup(getWatchedMovies(), genresList);
+}
+
+function updateActiveButton(type) {
+  btnWatched.classList.toggle('btn--active', type === 'watched');
+
+  btnQueue.classList.toggle('btn--active', type === 'queue');
 }
