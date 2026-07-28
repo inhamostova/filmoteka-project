@@ -7,6 +7,9 @@ export function removeFromWatched(arr, id) {
 }
 
 export function addToWatched(arr, movie) {
+  if (arr.some(({ id }) => id === movie.id)) {
+    return;
+  }
   arr.push(movie);
 }
 
@@ -29,6 +32,9 @@ export function removeFromQueue(arr, id) {
 }
 
 export function addToQueue(arr, movie) {
+  if (arr.some(({ id }) => id === movie.id)) {
+    return;
+  }
   arr.push(movie);
 }
 

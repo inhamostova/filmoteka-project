@@ -34,7 +34,7 @@ async function onGalleryClick(evt) {
     const movie = await fetchMovieById(id);
     modal.innerHTML = createMovieModalMarkup(movie);
 
-    const btnClose = document.querySelector('.modal__close-btn');
+    const btnClose = modal.querySelector('.modal__close-btn');
     const btnWatched = document.querySelector('[data-btn="watched"]');
     const btnQueue = document.querySelector('[data-btn="queue"]');
 
@@ -57,9 +57,9 @@ async function onGalleryClick(evt) {
         saveQueueMovies(queueMovies);
         btnQueue.textContent = 'add to queue';
         return;
-      } else {
-        btnQueue.textContent = 'Remove from queue';
       }
+      btnQueue.textContent = 'Remove from queue';
+
       addToQueue(queueMovies, movie);
       saveQueueMovies(queueMovies);
     });
@@ -71,9 +71,9 @@ async function onGalleryClick(evt) {
         saveWatchedMovies(watchedMovies);
         btnWatched.textContent = 'add to watched';
         return;
-      } else {
-        btnWatched.textContent = 'Remove from watched';
       }
+      btnWatched.textContent = 'Remove from watched';
+
       addToWatched(watchedMovies, movie);
       saveWatchedMovies(watchedMovies);
     });
