@@ -1,9 +1,24 @@
 import { fetchMovieById } from './services/movies-api';
 import { createMovieModalMarkup } from './render/createMovieModalMarkup';
+import {
+  removeFromWatched,
+  addToWatched,
+  saveWatchedMovies,
+  getWatchedMovies,
+  isMovieInWatched,
+  removeFromQueue,
+  addToQueue,
+  saveQueueMovies,
+  getQueueMovies,
+  isMovieInQueue,
+} from './services/storage';
 
 const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');
 const backdrop = document.querySelector('.backdrop');
+
+const watchedMovies = getWatchedMovies() ?? [];
+const queueMovies = getQueueMovies() ?? [];
 
 gallery.addEventListener('click', onGalleryClick);
 
@@ -15,11 +30,48 @@ async function onGalleryClick(evt) {
   try {
     const movie = await fetchMovieById(id);
     modal.innerHTML = createMovieModalMarkup(movie);
+
     const btnClose = document.querySelector('.modal__close-btn');
+    const btnWatched = document.querySelector('[data-btn="watched"]');
+    const btnQueue = document.querySelector('[data-btn="queue"]');
+
+    if (isMovieInWatched(watchedMovies, id)) {
+      btnWatched.textContent = 'Remove from watched';
+    }
+
+    if (isMovieInQueue(queueMovies, id)) {
+      btnQueue.textContent = 'Remove from queue';
+    }
+
     onModalToggle();
     document.addEventListener('keydown', onKeyDown);
     btnClose.addEventListener('click', onModalToggle);
     backdrop.addEventListener('click', onBackdropClick);
+
+    btnQueue.addEventListener('click', () => {
+      btnQueue.textContent = 'Remove from queue';
+
+      if (isMovieInQueue(queueMovies, id)) {
+        removeFromQueue(queueMovies, id);
+        saveQueueMovies(queueMovies);
+        btnQueue.textContent = 'add to queue';
+        return;
+      }
+      addToQueue(queueMovies, movie);
+      saveQueueMovies(queueMovies);
+    });
+
+    btnWatched.addEventListener('click', () => {
+      btnWatched.textContent = 'Remove from watched';
+      if (isMovieInWatched(watchedMovies, id)) {
+        removeFromWatched(watchedMovies, id);
+        saveWatchedMovies(watchedMovies);
+        btnWatched.textContent = 'add to watched';
+        return;
+      }
+      addToWatched(watchedMovies, movie);
+      saveWatchedMovies(watchedMovies);
+    });
   } catch (error) {
     console.error(error.message);
   }
