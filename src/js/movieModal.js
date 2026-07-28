@@ -17,9 +17,6 @@ const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');
 const backdrop = document.querySelector('.backdrop');
 
-// const watchedMovies = getWatchedMovies() ?? [];
-// const queueMovies = getQueueMovies() ?? [];
-
 gallery.addEventListener('click', onGalleryClick);
 
 async function onGalleryClick(evt) {
@@ -65,7 +62,6 @@ async function onGalleryClick(evt) {
     });
 
     btnWatched.addEventListener('click', () => {
-      //   btnWatched.textContent = 'Remove from watched';
       if (isMovieInWatched(watchedMovies, id)) {
         removeFromWatched(watchedMovies, id);
         saveWatchedMovies(watchedMovies);
