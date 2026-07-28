@@ -45,7 +45,7 @@ export async function fetchMoviesByQuery(query) {
 }
 
 export async function fetchMovieById(movieId) {
-  const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+  const res = await axios.get(`${BASE_URL}/movie/${movieId}`, {
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${API_TOKEN}`,
@@ -54,5 +54,5 @@ export async function fetchMovieById(movieId) {
       language: 'en-US',
     },
   });
-  return res;
+  return res.data;
 }

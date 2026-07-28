@@ -8,20 +8,17 @@ const backdrop = document.querySelector('.backdrop');
 gallery.addEventListener('click', onGalleryClick);
 
 async function onGalleryClick(evt) {
-  if (evt.target.classList.contains('js-gallery')) {
-    return;
-  }
-
-  const id = Number(evt.target.closest('li').dataset.id);
+  const card = evt.target.closest('.gallery-list__item');
+  if (!card) return;
+  const id = Number(card.dataset.id);
 
   try {
-    const { data } = await fetchMovieById(id);
-    // console.log(data);
-    onModalOpen();
-    modal.innerHTML = createMovieModalMarkup(data);
+    const movie = await fetchMovieById(id);
+    modal.innerHTML = createMovieModalMarkup(movie);
     const btnClose = document.querySelector('.modal__close-btn');
+    onModalToggle();
     document.addEventListener('keydown', onKeyDown);
-    btnClose.addEventListener('click', onModalOpen);
+    btnClose.addEventListener('click', onModalToggle);
     backdrop.addEventListener('click', onBackdropClick);
   } catch (error) {
     console.error(error.message);
@@ -33,17 +30,18 @@ function onKeyDown(evt) {
     return;
   }
 
-  onModalOpen();
-  document.removeEventListener('keydown', onKeyDown);
+  onModalToggle();
 }
 
-function onModalOpen() {
+function onModalToggle() {
   backdrop.classList.toggle('is-hidden');
+  document.removeEventListener('keydown', onKeyDown);
+  backdrop.removeEventListener('click', onBackdropClick);
 }
 
 function onBackdropClick(evt) {
   if (evt.target !== evt.currentTarget) {
     return;
   }
-  onModalOpen();
+  onModalToggle();
 }
