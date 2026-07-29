@@ -1,7 +1,24 @@
-const WATCHED_MOVIES = 'watchedMovies';
-const QUEUE_MOVIES = 'queueMovies';
+export const STORAGE_KEYS = {
+  WATCHED: 'watchedMovies',
+  QUEUE: 'queueMovies',
+};
 
-export function removeFromWatched(arr, id) {
+export function getMovies(type) {
+  return JSON.parse(localStorage.getItem(type)) ?? [];
+}
+
+export function saveMovies(type, arr) {
+  localStorage.setItem(type, JSON.stringify(arr));
+}
+
+export function addMovie(arr, movie) {
+  if (arr.some(({ id }) => id === movie.id)) {
+    return;
+  }
+  arr.push(movie);
+}
+
+export function removeMovie(arr, id) {
   const idxMovieToDelete = arr.findIndex(({ id: movieId }) => movieId === id);
 
   if (idxMovieToDelete === -1) return;
@@ -9,46 +26,6 @@ export function removeFromWatched(arr, id) {
   arr.splice(idxMovieToDelete, 1);
 }
 
-export function addToWatched(arr, movie) {
-  if (arr.some(({ id }) => id === movie.id)) {
-    return;
-  }
-  arr.push(movie);
-}
-
-export function saveWatchedMovies(arr) {
-  localStorage.setItem(WATCHED_MOVIES, JSON.stringify(arr));
-}
-
-export function getWatchedMovies() {
-  return JSON.parse(localStorage.getItem(WATCHED_MOVIES)) ?? [];
-}
-
-export function isMovieInWatched(arr, id) {
-  return arr.some(({ id: movieId }) => movieId === id);
-}
-
-export function removeFromQueue(arr, id) {
-  const idxMovieToDelete = arr.findIndex(({ id: movieId }) => movieId === id);
-  if (idxMovieToDelete === -1) return;
-  arr.splice(idxMovieToDelete, 1);
-}
-
-export function addToQueue(arr, movie) {
-  if (arr.some(({ id }) => id === movie.id)) {
-    return;
-  }
-  arr.push(movie);
-}
-
-export function saveQueueMovies(arr) {
-  localStorage.setItem(QUEUE_MOVIES, JSON.stringify(arr));
-}
-
-export function getQueueMovies() {
-  return JSON.parse(localStorage.getItem(QUEUE_MOVIES)) ?? [];
-}
-
-export function isMovieInQueue(arr, id) {
+export function hasMovie(arr, id) {
   return arr.some(({ id: movieId }) => movieId === id);
 }

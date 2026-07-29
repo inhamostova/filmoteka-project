@@ -1,4 +1,4 @@
-import { getWatchedMovies, getQueueMovies } from './services/storage';
+import { getMovies, STORAGE_KEYS } from './services/storage';
 import { createMovieCardsMarkup } from './render/movieCardsMarkup';
 import { fetchGenres } from './services/movies-api';
 
@@ -12,7 +12,10 @@ libraryInit();
 
 async function libraryInit() {
   genresList = await fetchGenres();
-  gallery.innerHTML = createMovieCardsMarkup(getWatchedMovies(), genresList);
+  gallery.innerHTML = createMovieCardsMarkup(
+    getMovies(STORAGE_KEYS.WATCHED),
+    genresList
+  );
 }
 
 btnQueue.addEventListener('click', onBtnQueueClick);
@@ -20,12 +23,18 @@ btnWatched.addEventListener('click', onBtnWatchedClick);
 
 function onBtnQueueClick() {
   updateActiveButton('queue');
-  gallery.innerHTML = createMovieCardsMarkup(getQueueMovies(), genresList);
+  gallery.innerHTML = createMovieCardsMarkup(
+    getMovies(STORAGE_KEYS.QUEUE),
+    genresList
+  );
 }
 
 function onBtnWatchedClick() {
   updateActiveButton('watched');
-  gallery.innerHTML = createMovieCardsMarkup(getWatchedMovies(), genresList);
+  gallery.innerHTML = createMovieCardsMarkup(
+    getMovies(STORAGE_KEYS.WATCHED),
+    genresList
+  );
 }
 
 function updateActiveButton(type) {
