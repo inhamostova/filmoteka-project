@@ -18,7 +18,6 @@ async function onSearchSubmit(evt) {
 
   if (!query) {
     showEl(errorMessage);
-    // form.reset();
     return;
   }
 
@@ -37,7 +36,6 @@ async function onSearchSubmit(evt) {
 
     if (!data.length) {
       showEl(errorMessage);
-      // form.reset();
       return;
     }
     gallery.innerHTML = createMovieCardsMarkup(data, genresCache);
