@@ -22,6 +22,15 @@ const pagination = new Pagination(container, {
   visiblePages: 5,
 });
 
+export function goToFirstPage() {
+  if (pagination.getCurrentPage() === 1) {
+    loadMovies(1);
+    return;
+  }
+
+  pagination.movePageTo(1);
+}
+
 pagination.on('afterMove', event => {
   currentPage = event.page;
   loadMovies(currentPage);
@@ -41,6 +50,7 @@ export async function loadMovies(page) {
       gallery.innerHTML = createMovieCardsMarkup(data.results, genresCache);
     } else {
       const data = await fetchMoviesByQuery(currentQuery, page);
+
       console.log(data);
       console.log(currentQuery);
 

@@ -1,7 +1,7 @@
 import { hideEl, showEl } from './helpers/helpers';
 import { fetchMoviesByQuery, fetchGenres } from './services/movies-api';
 import { createMovieCardsMarkup } from './render/movieCardsMarkup';
-import { loadMovies } from './services/loadMovies';
+import { goToFirstPage, loadMovies } from './services/loadMovies';
 import { setCurrentQuery } from './state';
 
 const searchForm = document.querySelector('.search-form');
@@ -34,7 +34,8 @@ async function onSearchSubmit(evt) {
 
   try {
     hideEl(errorMessage);
-    await loadMovies(1);
+    goToFirstPage();
+    // await loadMovies(1);
     // const data = await fetchMoviesByQuery(query);
     // genresCache = genresCache.length ? genresCache : await fetchGenres();
 
