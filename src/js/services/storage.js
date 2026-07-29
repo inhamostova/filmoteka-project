@@ -1,3 +1,8 @@
+export const STORAGE_KEYS = {
+  WATCHED: 'watchedMovies',
+  QUEUE: 'queueMovies',
+};
+
 export function getMovies(type) {
   return JSON.parse(localStorage.getItem(type)) ?? [];
 }
