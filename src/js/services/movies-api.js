@@ -43,7 +43,7 @@ export async function fetchMoviesByQuery(query, page = 1) {
       page,
     },
   });
-  return data.results;
+  return data;
 }
 
 export async function fetchMovieById(movieId) {

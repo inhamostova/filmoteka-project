@@ -1,6 +1,8 @@
 import { hideEl, showEl } from './helpers/helpers';
 import { fetchMoviesByQuery, fetchGenres } from './services/movies-api';
 import { createMovieCardsMarkup } from './render/movieCardsMarkup';
+import { loadMovies } from './services/loadMovies';
+import { setCurrentQuery } from './state';
 
 const searchForm = document.querySelector('.search-form');
 const errorMessage = document.querySelector('.search-form__error');
@@ -27,18 +29,20 @@ async function onSearchSubmit(evt) {
 
   gallery.innerHTML = '';
 
+  setCurrentQuery(query);
   currentQuery = query;
 
   try {
     hideEl(errorMessage);
-    const data = await fetchMoviesByQuery(query);
-    genresCache = genresCache.length ? genresCache : await fetchGenres();
+    await loadMovies(1);
+    // const data = await fetchMoviesByQuery(query);
+    // genresCache = genresCache.length ? genresCache : await fetchGenres();
 
-    if (!data.length) {
-      showEl(errorMessage);
-      return;
-    }
-    gallery.innerHTML = createMovieCardsMarkup(data, genresCache);
+    // if (!data.length) {
+    //   showEl(errorMessage);
+    //   return;
+    // }
+    // gallery.innerHTML = createMovieCardsMarkup(data, genresCache);
     form.reset();
   } catch (error) {
     console.error(error.message);
