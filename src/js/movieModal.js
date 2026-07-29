@@ -1,17 +1,15 @@
 import { fetchMovieById } from './services/movies-api';
 import { createMovieModalMarkup } from './render/createMovieModalMarkup';
 import {
-  removeFromWatched,
-  addToWatched,
-  saveWatchedMovies,
-  getWatchedMovies,
-  isMovieInWatched,
-  removeFromQueue,
-  addToQueue,
-  saveQueueMovies,
-  getQueueMovies,
-  isMovieInQueue,
+  getMovies,
+  saveMovies,
+  addMovie,
+  removeMovie,
+  hasMovie,
 } from './services/storage';
+
+const WATCHED_MOVIES = 'watchedMovies';
+const QUEUE_MOVIES = 'queueMovies';
 
 const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');
@@ -20,8 +18,8 @@ const backdrop = document.querySelector('.backdrop');
 gallery.addEventListener('click', onGalleryClick);
 
 async function onGalleryClick(evt) {
-  const watchedMovies = getWatchedMovies();
-  const queueMovies = getQueueMovies();
+  const watchedMovies = getMovies(WATCHED_MOVIES);
+  const queueMovies = getMovies(QUEUE_MOVIES);
 
   const card = evt.target.closest('.gallery-list__item');
   if (!card) return;
@@ -35,11 +33,11 @@ async function onGalleryClick(evt) {
     const btnWatched = document.querySelector('[data-btn="watched"]');
     const btnQueue = document.querySelector('[data-btn="queue"]');
 
-    if (isMovieInWatched(watchedMovies, id)) {
+    if (hasMovie(watchedMovies, id)) {
       btnWatched.textContent = 'Remove from watched';
     }
 
-    if (isMovieInQueue(queueMovies, id)) {
+    if (hasMovie(queueMovies, id)) {
       btnQueue.textContent = 'Remove from queue';
     }
 
@@ -49,29 +47,29 @@ async function onGalleryClick(evt) {
     backdrop.addEventListener('click', onBackdropClick);
 
     btnQueue.addEventListener('click', () => {
-      if (isMovieInQueue(queueMovies, id)) {
-        removeFromQueue(queueMovies, id);
-        saveQueueMovies(queueMovies);
+      if (hasMovie(queueMovies, id)) {
+        removeMovie(queueMovies, id);
+        saveMovies(QUEUE_MOVIES, queueMovies);
         btnQueue.textContent = 'add to queue';
         return;
       }
       btnQueue.textContent = 'Remove from queue';
 
-      addToQueue(queueMovies, movie);
-      saveQueueMovies(queueMovies);
+      addMovie(queueMovies, movie);
+      saveMovies(QUEUE_MOVIES, queueMovies);
     });
 
     btnWatched.addEventListener('click', () => {
-      if (isMovieInWatched(watchedMovies, id)) {
-        removeFromWatched(watchedMovies, id);
-        saveWatchedMovies(watchedMovies);
+      if (hasMovie(watchedMovies, id)) {
+        removeMovie(watchedMovies, id);
+        saveMovies(WATCHED_MOVIES, watchedMovies);
         btnWatched.textContent = 'add to watched';
         return;
       }
       btnWatched.textContent = 'Remove from watched';
 
-      addToWatched(watchedMovies, movie);
-      saveWatchedMovies(watchedMovies);
+      addMovie(watchedMovies, movie);
+      saveMovies(WATCHED_MOVIES, watchedMovies);
     });
   } catch (error) {
     console.error(error.message);
