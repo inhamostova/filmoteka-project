@@ -1,12 +1,9 @@
 import { hideEl, showEl } from './helpers/helpers';
-import { fetchMoviesByQuery, fetchGenres } from './services/movies-api';
-import { createMovieCardsMarkup } from './render/movieCardsMarkup';
+import { goToFirstPage } from './services/loadMovies';
+import { getCurrentQuery, setCurrentQuery } from './state';
 
 const searchForm = document.querySelector('.search-form');
 const errorMessage = document.querySelector('.search-form__error');
-const gallery = document.querySelector('.js-gallery');
-let currentQuery = '';
-let genresCache = [];
 
 searchForm.addEventListener('submit', onSearchSubmit);
 
@@ -18,29 +15,19 @@ async function onSearchSubmit(evt) {
 
   if (!query) {
     showEl(errorMessage);
-    // form.reset();
     return;
   }
 
-  if (currentQuery === query) {
+  if (getCurrentQuery() === query) {
     return;
   }
 
-  gallery.innerHTML = '';
-
-  currentQuery = query;
+  setCurrentQuery(query);
 
   try {
     hideEl(errorMessage);
-    const data = await fetchMoviesByQuery(query);
-    genresCache = genresCache.length ? genresCache : await fetchGenres();
+    goToFirstPage();
 
-    if (!data.length) {
-      showEl(errorMessage);
-      // form.reset();
-      return;
-    }
-    gallery.innerHTML = createMovieCardsMarkup(data, genresCache);
     form.reset();
   } catch (error) {
     console.error(error.message);
