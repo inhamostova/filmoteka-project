@@ -1,5 +1,4 @@
 import Pagination from 'tui-pagination';
-// import 'tui-pagination/dist/tui-pagination.css';
 
 import {
   fetchTrendingMovies,
@@ -15,12 +14,7 @@ const container = document.querySelector('#tui-pagination-container');
 const errorMessage = document.querySelector('.search-form__error');
 
 let genresCache = [];
-
-const pagination = new Pagination(container, {
-  totalItems: 1000,
-  itemsPerPage: 20,
-  visiblePages: 5,
-});
+let pagination = null;
 
 export function goToFirstPage() {
   if (pagination.getCurrentPage() === 1) {
@@ -31,11 +25,6 @@ export function goToFirstPage() {
   pagination.movePageTo(1);
 }
 
-pagination.on('afterMove', ({ page }) => {
-  loadMovies(page);
-  // window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
 export async function loadMovies(page) {
   const currentQuery = getCurrentQuery();
   try {
@@ -44,10 +33,21 @@ export async function loadMovies(page) {
     if (currentQuery === '') {
       const data = await fetchTrendingMovies(page);
 
-      pagination.setTotalItems(data.total_results);
+      if (!pagination) {
+        initPagination(data.total_results);
+      } else {
+        pagination.setTotalItems(data.total_results);
+      }
+
+      //   pagination.setTotalItems(data.total_results);
       gallery.innerHTML = createMovieCardsMarkup(data.results, genresCache);
     } else {
       const data = await fetchMoviesByQuery(currentQuery, page);
+
+      // Recreate pagination only when starting a new search.
+      if (page === 1) {
+        initPagination(data.total_results);
+      }
 
       if (!data.results.length) {
         showEl(errorMessage);
@@ -59,4 +59,17 @@ export async function loadMovies(page) {
   } catch (error) {
     console.error(error.message);
   }
+}
+
+function initPagination(totalItems) {
+  pagination = new Pagination(container, {
+    totalItems: totalItems,
+    itemsPerPage: 20,
+    visiblePages: 5,
+  });
+
+  pagination.on('afterMove', ({ page }) => {
+    loadMovies(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 }
