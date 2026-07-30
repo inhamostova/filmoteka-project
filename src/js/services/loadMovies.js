@@ -28,7 +28,9 @@ export function goToFirstPage() {
 
 export async function loadMovies(page) {
   const currentQuery = getCurrentQuery();
-  gallery.innerHTML = '';
+
+  hideEl(gallery);
+  hideEl(container);
   showLoader();
 
   try {
@@ -36,6 +38,8 @@ export async function loadMovies(page) {
 
     if (currentQuery === '') {
       const data = await fetchTrendingMovies(page);
+      showEl(gallery);
+      showEl(container);
 
       if (!pagination) {
         initPagination(data.total_results);
@@ -46,6 +50,8 @@ export async function loadMovies(page) {
       gallery.innerHTML = createMovieCardsMarkup(data.results, genresCache);
     } else {
       const data = await fetchMoviesByQuery(currentQuery, page);
+      showEl(gallery);
+      showEl(container);
 
       // Recreate pagination only when starting a new search.
       if (page === 1) {
@@ -54,6 +60,8 @@ export async function loadMovies(page) {
 
       if (!data.results.length) {
         showEl(errorMessage);
+        hideEl(gallery);
+        hideEl(container);
         return;
       }
       pagination.setTotalItems(data.total_results);
