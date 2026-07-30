@@ -7,7 +7,8 @@ import {
 } from './movies-api';
 import { createMovieCardsMarkup } from '../render/movieCardsMarkup';
 import { getCurrentQuery } from '../state';
-import { showEl } from '../helpers/helpers';
+import { hideEl, showEl } from '../helpers/helpers';
+import { hideLoader, showLoader } from '../helpers/loader';
 
 const gallery = document.querySelector('.js-gallery');
 const container = document.querySelector('#tui-pagination-container');
@@ -27,6 +28,9 @@ export function goToFirstPage() {
 
 export async function loadMovies(page) {
   const currentQuery = getCurrentQuery();
+  showLoader();
+
+  gallery.innerHTML = '';
   try {
     genresCache = genresCache.length ? genresCache : await fetchGenres();
 
@@ -39,7 +43,6 @@ export async function loadMovies(page) {
         pagination.setTotalItems(data.total_results);
       }
 
-      //   pagination.setTotalItems(data.total_results);
       gallery.innerHTML = createMovieCardsMarkup(data.results, genresCache);
     } else {
       const data = await fetchMoviesByQuery(currentQuery, page);
@@ -58,6 +61,8 @@ export async function loadMovies(page) {
     }
   } catch (error) {
     console.error(error.message);
+  } finally {
+    hideLoader();
   }
 }
 
