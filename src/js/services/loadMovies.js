@@ -17,7 +17,7 @@ let genresCache = [];
 let pagination = null;
 
 export function goToFirstPage() {
-  if (pagination.getCurrentPage() === 1) {
+  if (!pagination || pagination.getCurrentPage() === 1) {
     loadMovies(1);
     return;
   }
@@ -63,7 +63,7 @@ export async function loadMovies(page) {
 
 function initPagination(totalItems) {
   pagination = new Pagination(container, {
-    totalItems: totalItems,
+    totalItems,
     itemsPerPage: 20,
     visiblePages: 5,
   });

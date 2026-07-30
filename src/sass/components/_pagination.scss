@@ -31,7 +31,7 @@
     background-color: #f7f7f7;
   }
 
-  &:hover.tui-is-selected {
+  &.tui-is-selected:hover {
     background-color: #ff6b08;
     color: white;
   }
