@@ -57,6 +57,6 @@ export async function loadMovies(page) {
       gallery.innerHTML = createMovieCardsMarkup(data.results, genresCache);
     }
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
   }
 }

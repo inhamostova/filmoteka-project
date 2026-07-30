@@ -1,10 +1,9 @@
 import { hideEl, showEl } from './helpers/helpers';
-import { goToFirstPage, loadMovies } from './services/loadMovies';
+import { goToFirstPage } from './services/loadMovies';
 import { getCurrentQuery, setCurrentQuery } from './state';
 
 const searchForm = document.querySelector('.search-form');
 const errorMessage = document.querySelector('.search-form__error');
-const gallery = document.querySelector('.js-gallery');
 
 searchForm.addEventListener('submit', onSearchSubmit);
 
@@ -22,8 +21,6 @@ async function onSearchSubmit(evt) {
   if (getCurrentQuery() === query) {
     return;
   }
-
-  gallery.innerHTML = '';
 
   setCurrentQuery(query);
 
