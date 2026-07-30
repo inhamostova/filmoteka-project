@@ -1,0 +1,94 @@
+.tui-pagination {
+  margin: 0 auto;
+  width: 280px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (min-width: 768px) {
+    width: 374px;
+  }
+}
+
+.tui-page-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 5px;
+
+  text-decoration: none;
+
+  color: #000;
+
+  transition: background-color 250ms ease;
+
+  &:hover {
+    background-color: #f7f7f7;
+  }
+
+  &.tui-is-selected:hover {
+    background-color: #ff6b08;
+    color: white;
+  }
+}
+
+.tui-is-selected {
+  width: 40px;
+  background-color: #ff6b08;
+  color: white;
+}
+
+.tui-is-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.tui-ico-prev,
+.tui-ico-next,
+.tui-ico-first,
+.tui-ico-last {
+  font-size: 0;
+}
+
+.tui-prev,
+.tui-next {
+  background-color: #f7f7f7;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.tui-prev {
+  background-image: url('../images/pagination/arrow-left.svg');
+}
+
+.tui-next {
+  background-image: url('../images/pagination/arrow-right.svg');
+}
+
+.tui-last,
+.tui-first {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px;
+}
+
+.tui-first {
+  background-image: url('../images/pagination/double-arrow-left.svg');
+}
+
+.tui-last {
+  background-image: url('../images/pagination/double-arrow-right.svg');
+}
+
+.tui-last-child,
+.tui-last,
+.tui-first {
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
