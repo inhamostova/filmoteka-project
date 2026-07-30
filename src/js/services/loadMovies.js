@@ -15,10 +15,10 @@ const container = document.querySelector('#tui-pagination-container');
 const errorMessage = document.querySelector('.search-form__error');
 
 let genresCache = [];
-let currentPage = 1;
 
 const pagination = new Pagination(container, {
   totalItems: 1000,
+  itemsPerPage: 20,
   visiblePages: 5,
 });
 
@@ -31,9 +31,8 @@ export function goToFirstPage() {
   pagination.movePageTo(1);
 }
 
-pagination.on('afterMove', event => {
-  currentPage = event.page;
-  loadMovies(currentPage);
+pagination.on('afterMove', ({ page }) => {
+  loadMovies(page);
   // window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
@@ -44,15 +43,11 @@ export async function loadMovies(page) {
 
     if (currentQuery === '') {
       const data = await fetchTrendingMovies(page);
-      console.log(data);
 
       pagination.setTotalItems(data.total_results);
       gallery.innerHTML = createMovieCardsMarkup(data.results, genresCache);
     } else {
       const data = await fetchMoviesByQuery(currentQuery, page);
-
-      console.log(data);
-      console.log(currentQuery);
 
       if (!data.results.length) {
         showEl(errorMessage);
