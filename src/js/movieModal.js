@@ -8,6 +8,7 @@ import {
   hasMovie,
   STORAGE_KEYS,
 } from './services/storage';
+import { hideLoader, showLoader } from './helpers/loader';
 
 const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');
@@ -22,6 +23,8 @@ async function onGalleryClick(evt) {
   const card = evt.target.closest('.gallery-list__item');
   if (!card) return;
   const id = Number(card.dataset.id);
+
+  showLoader();
 
   try {
     const movie = await fetchMovieById(id);
@@ -71,6 +74,8 @@ async function onGalleryClick(evt) {
     });
   } catch (error) {
     console.error(error.message);
+  } finally {
+    hideLoader();
   }
 }
 
