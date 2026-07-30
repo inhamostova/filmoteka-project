@@ -28,9 +28,9 @@ export function goToFirstPage() {
 
 export async function loadMovies(page) {
   const currentQuery = getCurrentQuery();
+  gallery.innerHTML = '';
   showLoader();
 
-  gallery.innerHTML = '';
   try {
     genresCache = genresCache.length ? genresCache : await fetchGenres();
 
