@@ -4,6 +4,7 @@ import { fetchGenres } from './services/movies-api';
 import { hideLoader, showLoader } from './helpers/loader';
 import { onGalleryClick } from './movieModal';
 import { setActivePage, setCurrentLibraryBtn } from './state';
+import { renderEmptyState } from './helpers/helpers';
 
 const btnWatched = document.querySelector('[data-btn="watched"]');
 const btnQueue = document.querySelector('[data-btn="queue"]');
@@ -21,10 +22,14 @@ async function libraryInit() {
   showLoader();
   try {
     genresList = await fetchGenres();
-    gallery.innerHTML = createMovieCardsMarkup(
-      getMovies(STORAGE_KEYS.WATCHED),
-      genresList
-    );
+    if (!getMovies(STORAGE_KEYS.WATCHED).length) {
+      renderEmptyState(gallery);
+    } else {
+      gallery.innerHTML = createMovieCardsMarkup(
+        getMovies(STORAGE_KEYS.WATCHED),
+        genresList
+      );
+    }
   } catch (error) {
     console.error(error.message);
   } finally {
@@ -38,19 +43,27 @@ btnWatched.addEventListener('click', onBtnWatchedClick);
 function onBtnQueueClick() {
   updateActiveButton('queue');
   setCurrentLibraryBtn('queue');
-  gallery.innerHTML = createMovieCardsMarkup(
-    getMovies(STORAGE_KEYS.QUEUE),
-    genresList
-  );
+  if (!getMovies(STORAGE_KEYS.QUEUE).length) {
+    renderEmptyState(gallery);
+  } else {
+    gallery.innerHTML = createMovieCardsMarkup(
+      getMovies(STORAGE_KEYS.QUEUE),
+      genresList
+    );
+  }
 }
 
 function onBtnWatchedClick() {
   updateActiveButton('watched');
   setCurrentLibraryBtn('watched');
-  gallery.innerHTML = createMovieCardsMarkup(
-    getMovies(STORAGE_KEYS.WATCHED),
-    genresList
-  );
+  if (!getMovies(STORAGE_KEYS.WATCHED).length) {
+    renderEmptyState(gallery);
+  } else {
+    gallery.innerHTML = createMovieCardsMarkup(
+      getMovies(STORAGE_KEYS.WATCHED),
+      genresList
+    );
+  }
 }
 
 function updateActiveButton(type) {
