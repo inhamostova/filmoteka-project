@@ -1,4 +1,4 @@
-import { fetchMovieById } from './services/movies-api';
+import { fetchGenres, fetchMovieById } from './services/movies-api';
 import { createMovieModalMarkup } from './render/createMovieModalMarkup';
 import {
   getMovies,
@@ -9,14 +9,18 @@ import {
   STORAGE_KEYS,
 } from './services/storage';
 import { hideLoader, showLoader } from './helpers/loader';
+import { createMovieCardsMarkup } from './render/movieCardsMarkup';
+import { getActivePage, getCurrentLibraryBtn } from './state';
 
 const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');
 const backdrop = document.querySelector('.backdrop');
 
+let genresCache = [];
+
 gallery.addEventListener('click', onGalleryClick);
 
-async function onGalleryClick(evt) {
+export async function onGalleryClick(evt) {
   const watchedMovies = getMovies(STORAGE_KEYS.WATCHED);
   const queueMovies = getMovies(STORAGE_KEYS.QUEUE);
 
@@ -28,6 +32,8 @@ async function onGalleryClick(evt) {
 
   try {
     const movie = await fetchMovieById(id);
+    genresCache = genresCache.length ? genresCache : await fetchGenres();
+
     modal.innerHTML = createMovieModalMarkup(movie);
 
     const btnClose = modal.querySelector('.modal__close-btn');
@@ -52,12 +58,22 @@ async function onGalleryClick(evt) {
         removeMovie(queueMovies, id);
         saveMovies(STORAGE_KEYS.QUEUE, queueMovies);
         btnQueue.textContent = 'add to queue';
+        if (
+          getActivePage() === 'library' &&
+          getCurrentLibraryBtn() === 'queue'
+        ) {
+          renderLibrary(STORAGE_KEYS.QUEUE);
+          onModalToggle();
+        }
         return;
       }
       btnQueue.textContent = 'Remove from queue';
 
       addMovie(queueMovies, movie);
       saveMovies(STORAGE_KEYS.QUEUE, queueMovies);
+      if (getActivePage() === 'library' && getCurrentLibraryBtn() === 'queue') {
+        renderLibrary(STORAGE_KEYS.QUEUE);
+      }
     });
 
     btnWatched.addEventListener('click', () => {
@@ -65,12 +81,30 @@ async function onGalleryClick(evt) {
         removeMovie(watchedMovies, id);
         saveMovies(STORAGE_KEYS.WATCHED, watchedMovies);
         btnWatched.textContent = 'add to watched';
+
+        if (
+          getActivePage() === 'library' &&
+          getCurrentLibraryBtn() === 'watched'
+        ) {
+          renderLibrary(STORAGE_KEYS.WATCHED);
+          onModalToggle();
+        }
         return;
       }
       btnWatched.textContent = 'Remove from watched';
 
       addMovie(watchedMovies, movie);
       saveMovies(STORAGE_KEYS.WATCHED, watchedMovies);
+      if (
+        getActivePage() === 'library' &&
+        getCurrentLibraryBtn() === 'watched'
+      ) {
+        // gallery.innerHTML = createMovieCardsMarkup(
+        //   getMovies(STORAGE_KEYS.WATCHED),
+        //   genresCache
+        // );
+        renderLibrary(STORAGE_KEYS.WATCHED);
+      }
     });
   } catch (error) {
     console.error(error.message);
@@ -98,4 +132,11 @@ function onBackdropClick(evt) {
     return;
   }
   onModalToggle();
+}
+
+function renderLibrary(storageKey) {
+  gallery.innerHTML = createMovieCardsMarkup(
+    getMovies(storageKey),
+    genresCache
+  );
 }
