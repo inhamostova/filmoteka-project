@@ -17,18 +17,17 @@ let genresList = [];
 libraryInit();
 
 async function libraryInit() {
+  const watchedMovies = getMovies(STORAGE_KEYS.WATCHED);
   setActivePage('library');
   setCurrentLibraryBtn('watched');
   showLoader();
   try {
     genresList = await fetchGenres();
-    if (!getMovies(STORAGE_KEYS.WATCHED).length) {
+
+    if (!watchedMovies.length) {
       renderEmptyState(gallery);
     } else {
-      gallery.innerHTML = createMovieCardsMarkup(
-        getMovies(STORAGE_KEYS.WATCHED),
-        genresList
-      );
+      gallery.innerHTML = createMovieCardsMarkup(watchedMovies, genresList);
     }
   } catch (error) {
     console.error(error.message);
@@ -41,28 +40,26 @@ btnQueue.addEventListener('click', onBtnQueueClick);
 btnWatched.addEventListener('click', onBtnWatchedClick);
 
 function onBtnQueueClick() {
+  const queueMovies = getMovies(STORAGE_KEYS.QUEUE);
   updateActiveButton('queue');
   setCurrentLibraryBtn('queue');
-  if (!getMovies(STORAGE_KEYS.QUEUE).length) {
+
+  if (!queueMovies.length) {
     renderEmptyState(gallery);
   } else {
-    gallery.innerHTML = createMovieCardsMarkup(
-      getMovies(STORAGE_KEYS.QUEUE),
-      genresList
-    );
+    gallery.innerHTML = createMovieCardsMarkup(queueMovies, genresList);
   }
 }
 
 function onBtnWatchedClick() {
+  const watchedMovies = getMovies(STORAGE_KEYS.WATCHED);
   updateActiveButton('watched');
   setCurrentLibraryBtn('watched');
-  if (!getMovies(STORAGE_KEYS.WATCHED).length) {
+
+  if (!watchedMovies.length) {
     renderEmptyState(gallery);
   } else {
-    gallery.innerHTML = createMovieCardsMarkup(
-      getMovies(STORAGE_KEYS.WATCHED),
-      genresList
-    );
+    gallery.innerHTML = createMovieCardsMarkup(watchedMovies, genresList);
   }
 }
 
