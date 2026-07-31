@@ -11,6 +11,7 @@ import {
 import { hideLoader, showLoader } from './helpers/loader';
 import { createMovieCardsMarkup } from './render/movieCardsMarkup';
 import { getActivePage, getCurrentLibraryBtn } from './state';
+import { renderEmptyState } from './helpers/helpers';
 
 const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');
@@ -62,7 +63,11 @@ export async function onGalleryClick(evt) {
           getActivePage() === 'library' &&
           getCurrentLibraryBtn() === 'queue'
         ) {
-          renderLibrary(STORAGE_KEYS.QUEUE);
+          if (!getMovies(STORAGE_KEYS.QUEUE).length) {
+            renderEmptyState(gallery);
+          } else {
+            renderLibrary(STORAGE_KEYS.QUEUE);
+          }
           onModalToggle();
         }
         return;
@@ -86,7 +91,11 @@ export async function onGalleryClick(evt) {
           getActivePage() === 'library' &&
           getCurrentLibraryBtn() === 'watched'
         ) {
-          renderLibrary(STORAGE_KEYS.WATCHED);
+          if (!getMovies(STORAGE_KEYS.WATCHED).length) {
+            renderEmptyState(gallery);
+          } else {
+            renderLibrary(STORAGE_KEYS.WATCHED);
+          }
           onModalToggle();
         }
         return;
@@ -99,10 +108,6 @@ export async function onGalleryClick(evt) {
         getActivePage() === 'library' &&
         getCurrentLibraryBtn() === 'watched'
       ) {
-        // gallery.innerHTML = createMovieCardsMarkup(
-        //   getMovies(STORAGE_KEYS.WATCHED),
-        //   genresCache
-        // );
         renderLibrary(STORAGE_KEYS.WATCHED);
       }
     });

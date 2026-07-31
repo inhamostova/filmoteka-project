@@ -4,6 +4,7 @@ import { fetchGenres } from './services/movies-api';
 import { hideLoader, showLoader } from './helpers/loader';
 import { onGalleryClick } from './movieModal';
 import { setActivePage, setCurrentLibraryBtn } from './state';
+import { renderEmptyState } from './helpers/helpers';
 
 const btnWatched = document.querySelector('[data-btn="watched"]');
 const btnQueue = document.querySelector('[data-btn="queue"]');
@@ -16,15 +17,18 @@ let genresList = [];
 libraryInit();
 
 async function libraryInit() {
+  const watchedMovies = getMovies(STORAGE_KEYS.WATCHED);
   setActivePage('library');
   setCurrentLibraryBtn('watched');
   showLoader();
   try {
     genresList = await fetchGenres();
-    gallery.innerHTML = createMovieCardsMarkup(
-      getMovies(STORAGE_KEYS.WATCHED),
-      genresList
-    );
+
+    if (!watchedMovies.length) {
+      renderEmptyState(gallery);
+    } else {
+      gallery.innerHTML = createMovieCardsMarkup(watchedMovies, genresList);
+    }
   } catch (error) {
     console.error(error.message);
   } finally {
@@ -36,21 +40,27 @@ btnQueue.addEventListener('click', onBtnQueueClick);
 btnWatched.addEventListener('click', onBtnWatchedClick);
 
 function onBtnQueueClick() {
+  const queueMovies = getMovies(STORAGE_KEYS.QUEUE);
   updateActiveButton('queue');
   setCurrentLibraryBtn('queue');
-  gallery.innerHTML = createMovieCardsMarkup(
-    getMovies(STORAGE_KEYS.QUEUE),
-    genresList
-  );
+
+  if (!queueMovies.length) {
+    renderEmptyState(gallery);
+  } else {
+    gallery.innerHTML = createMovieCardsMarkup(queueMovies, genresList);
+  }
 }
 
 function onBtnWatchedClick() {
+  const watchedMovies = getMovies(STORAGE_KEYS.WATCHED);
   updateActiveButton('watched');
   setCurrentLibraryBtn('watched');
-  gallery.innerHTML = createMovieCardsMarkup(
-    getMovies(STORAGE_KEYS.WATCHED),
-    genresList
-  );
+
+  if (!watchedMovies.length) {
+    renderEmptyState(gallery);
+  } else {
+    gallery.innerHTML = createMovieCardsMarkup(watchedMovies, genresList);
+  }
 }
 
 function updateActiveButton(type) {
