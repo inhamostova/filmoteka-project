@@ -3,7 +3,7 @@ import { createMovieCardsMarkup } from './render/movieCardsMarkup';
 import { fetchGenres } from './services/movies-api';
 import { hideLoader, showLoader } from './helpers/loader';
 import { onGalleryClick } from './movieModal';
-import { setActivePage } from './state';
+import { setActivePage, setCurrentLibraryBtn } from './state';
 
 const btnWatched = document.querySelector('[data-btn="watched"]');
 const btnQueue = document.querySelector('[data-btn="queue"]');
@@ -17,6 +17,7 @@ libraryInit();
 
 async function libraryInit() {
   setActivePage('library');
+  setCurrentLibraryBtn('watched');
   showLoader();
   try {
     genresList = await fetchGenres();
@@ -36,6 +37,7 @@ btnWatched.addEventListener('click', onBtnWatchedClick);
 
 function onBtnQueueClick() {
   updateActiveButton('queue');
+  setCurrentLibraryBtn('queue');
   gallery.innerHTML = createMovieCardsMarkup(
     getMovies(STORAGE_KEYS.QUEUE),
     genresList
@@ -44,6 +46,7 @@ function onBtnQueueClick() {
 
 function onBtnWatchedClick() {
   updateActiveButton('watched');
+  setCurrentLibraryBtn('watched');
   gallery.innerHTML = createMovieCardsMarkup(
     getMovies(STORAGE_KEYS.WATCHED),
     genresList

@@ -10,7 +10,7 @@ import {
 } from './services/storage';
 import { hideLoader, showLoader } from './helpers/loader';
 import { createMovieCardsMarkup } from './render/movieCardsMarkup';
-import { getActivePage } from './state';
+import { getActivePage, getCurrentLibraryBtn } from './state';
 
 const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');
@@ -32,7 +32,7 @@ export async function onGalleryClick(evt) {
 
   try {
     const movie = await fetchMovieById(id);
-    genresCache = await fetchGenres();
+    genresCache = genresCache.length ? genresCache : await fetchGenres();
 
     modal.innerHTML = createMovieModalMarkup(movie);
 
@@ -58,11 +58,12 @@ export async function onGalleryClick(evt) {
         removeMovie(queueMovies, id);
         saveMovies(STORAGE_KEYS.QUEUE, queueMovies);
         btnQueue.textContent = 'add to queue';
-        if (getActivePage() === 'library') {
-          gallery.innerHTML = createMovieCardsMarkup(
-            getMovies(STORAGE_KEYS.QUEUE),
-            genresCache
-          );
+        if (
+          getActivePage() === 'library' &&
+          getCurrentLibraryBtn() === 'queue'
+        ) {
+          renderLibrary(STORAGE_KEYS.QUEUE);
+          onModalToggle();
         }
         return;
       }
@@ -70,11 +71,8 @@ export async function onGalleryClick(evt) {
 
       addMovie(queueMovies, movie);
       saveMovies(STORAGE_KEYS.QUEUE, queueMovies);
-      if (getActivePage() === 'library') {
-        gallery.innerHTML = createMovieCardsMarkup(
-          getMovies(STORAGE_KEYS.QUEUE),
-          genresCache
-        );
+      if (getActivePage() === 'library' && getCurrentLibraryBtn() === 'queue') {
+        renderLibrary(STORAGE_KEYS.QUEUE);
       }
     });
 
@@ -84,11 +82,12 @@ export async function onGalleryClick(evt) {
         saveMovies(STORAGE_KEYS.WATCHED, watchedMovies);
         btnWatched.textContent = 'add to watched';
 
-        if (getActivePage() === 'library') {
-          gallery.innerHTML = createMovieCardsMarkup(
-            getMovies(STORAGE_KEYS.WATCHED),
-            genresCache
-          );
+        if (
+          getActivePage() === 'library' &&
+          getCurrentLibraryBtn() === 'watched'
+        ) {
+          renderLibrary(STORAGE_KEYS.WATCHED);
+          onModalToggle();
         }
         return;
       }
@@ -96,11 +95,15 @@ export async function onGalleryClick(evt) {
 
       addMovie(watchedMovies, movie);
       saveMovies(STORAGE_KEYS.WATCHED, watchedMovies);
-      if (getActivePage() === 'library') {
-        gallery.innerHTML = createMovieCardsMarkup(
-          getMovies(STORAGE_KEYS.WATCHED),
-          genresCache
-        );
+      if (
+        getActivePage() === 'library' &&
+        getCurrentLibraryBtn() === 'watched'
+      ) {
+        // gallery.innerHTML = createMovieCardsMarkup(
+        //   getMovies(STORAGE_KEYS.WATCHED),
+        //   genresCache
+        // );
+        renderLibrary(STORAGE_KEYS.WATCHED);
       }
     });
   } catch (error) {
@@ -129,4 +132,11 @@ function onBackdropClick(evt) {
     return;
   }
   onModalToggle();
+}
+
+function renderLibrary(storageKey) {
+  gallery.innerHTML = createMovieCardsMarkup(
+    getMovies(storageKey),
+    genresCache
+  );
 }
