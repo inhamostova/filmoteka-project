@@ -7,3 +7,13 @@ export function setCurrentQuery(query) {
 export function getCurrentQuery() {
   return currentQuery;
 }
+
+let activePage = '';
+
+export function setActivePage(page) {
+  activePage = page;
+}
+
+export function getActivePage() {
+  return activePage;
+}

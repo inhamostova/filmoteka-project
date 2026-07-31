@@ -2,16 +2,21 @@ import { getMovies, STORAGE_KEYS } from './services/storage';
 import { createMovieCardsMarkup } from './render/movieCardsMarkup';
 import { fetchGenres } from './services/movies-api';
 import { hideLoader, showLoader } from './helpers/loader';
+import { onGalleryClick } from './movieModal';
+import { setActivePage } from './state';
 
 const btnWatched = document.querySelector('[data-btn="watched"]');
 const btnQueue = document.querySelector('[data-btn="queue"]');
 const gallery = document.querySelector('.js-gallery');
+
+gallery.addEventListener('click', onGalleryClick);
 
 let genresList = [];
 
 libraryInit();
 
 async function libraryInit() {
+  setActivePage('library');
   showLoader();
   try {
     genresList = await fetchGenres();
