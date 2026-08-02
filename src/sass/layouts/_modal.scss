@@ -1,3 +1,7 @@
+.no-scroll {
+  overflow: hidden;
+}
+
 .backdrop {
   position: fixed;
   top: 0;
@@ -9,6 +13,8 @@
   opacity: 1;
   visibility: visible;
   pointer-events: initial;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 
   @media screen and (min-width: 768px) {
     padding-top: 219px;
@@ -106,8 +112,10 @@
   height: 357px;
   margin-bottom: 20px;
   border-radius: 5px;
+  object-fit: cover;
 
   @media screen and (min-width: 768px) {
+    margin-bottom: 0;
     width: 264px;
     height: 374px;
   }
@@ -131,7 +139,8 @@
 
 .modal__info {
   display: flex;
-  gap: 40px;
+  margin-bottom: 8px;
+  // gap: 40px;
 
   &.last {
     margin-bottom: 20px;
@@ -139,16 +148,35 @@
 }
 
 .modal__info__data {
+  flex-basis: 50%;
   line-height: calc(16 / 12);
   color: #8c8c8c;
+}
 
-  &.popularity {
-    margin-right: 13px;
-  }
+.modal__info__value {
+  flex-basis: 50%;
+}
 
-  &.genre {
-    margin-right: 36px;
-  }
+.vote {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 16px;
+  background-color: #ff6b01;
+  color: #ffffff;
+
+  border-radius: 5px;
+}
+
+.votes {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 16px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
 }
 
 .modal__about {
@@ -181,14 +209,16 @@
 
   cursor: pointer;
 
-  &.primary {
+  background-color: transparent;
+  transition:
+    background-color 250ms ease-in,
+    color 250ms ease-in,
+    border 250ms ease-in;
+
+  &:hover {
     background-color: #ff6b01;
     border: none;
     color: #ffffff;
-  }
-
-  &.secondary {
-    background-color: transparent;
   }
 
   @media screen and (min-width: 768px) {
