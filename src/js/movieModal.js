@@ -130,6 +130,7 @@ function onModalToggle() {
   backdrop.classList.toggle('is-hidden');
   document.removeEventListener('keydown', onKeyDown);
   backdrop.removeEventListener('click', onBackdropClick);
+  document.body.classList.toggle('no-scroll');
 }
 
 function onBackdropClick(evt) {
