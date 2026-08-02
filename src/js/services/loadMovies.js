@@ -13,8 +13,7 @@ import { hideLoader, showLoader } from '../helpers/loader';
 const gallery = document.querySelector('.js-gallery');
 const container = document.querySelector('#tui-pagination-container');
 const errorMessage = document.querySelector('.search-form__error');
-const footer = document.querySelector('footer');
-console.log(footer);
+const footer = document.querySelector('footer').firstElementChild;
 
 let genresCache = [];
 let pagination = null;
@@ -52,7 +51,7 @@ export async function loadMovies(page) {
 
       gallery.innerHTML = createMovieCardsMarkup(data.results, genresCache);
     } else {
-      footer.firstElementChild.classList.remove('footer--sticky');
+      footer.classList.remove('footer--empty-state');
       const data = await fetchMoviesByQuery(currentQuery, page);
       showEl(gallery);
       showEl(container);
@@ -66,7 +65,7 @@ export async function loadMovies(page) {
         showEl(errorMessage);
         hideEl(gallery);
         hideEl(container);
-        footer.firstElementChild.classList.add('footer--sticky');
+        footer.classList.add('footer--empty-state');
         return;
       }
       pagination.setTotalItems(data.total_results);

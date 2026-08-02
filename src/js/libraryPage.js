@@ -9,8 +9,7 @@ import { hideEl, renderEmptyState, showEl } from './helpers/helpers';
 const btnWatched = document.querySelector('[data-btn="watched"]');
 const btnQueue = document.querySelector('[data-btn="queue"]');
 const gallery = document.querySelector('.js-gallery');
-const footer = document.querySelector('footer');
-console.log(footer);
+const footer = document.querySelector('footer').firstElementChild;
 
 gallery.addEventListener('click', onGalleryClick);
 
@@ -31,6 +30,7 @@ async function libraryInit() {
       renderEmptyState(gallery);
     } else {
       gallery.innerHTML = createMovieCardsMarkup(watchedMovies, genresList);
+      // showEl(footer);
     }
   } catch (error) {
     console.error(error.message);
