@@ -4,11 +4,13 @@ import { fetchGenres } from './services/movies-api';
 import { hideLoader, showLoader } from './helpers/loader';
 import { onGalleryClick } from './movieModal';
 import { setActivePage, setCurrentLibraryBtn } from './state';
-import { renderEmptyState } from './helpers/helpers';
+import { hideEl, renderEmptyState, showEl } from './helpers/helpers';
 
 const btnWatched = document.querySelector('[data-btn="watched"]');
 const btnQueue = document.querySelector('[data-btn="queue"]');
 const gallery = document.querySelector('.js-gallery');
+const footer = document.querySelector('footer');
+console.log(footer);
 
 gallery.addEventListener('click', onGalleryClick);
 
@@ -21,6 +23,7 @@ async function libraryInit() {
   setActivePage('library');
   setCurrentLibraryBtn('watched');
   showLoader();
+  hideEl(footer);
   try {
     genresList = await fetchGenres();
 
@@ -33,6 +36,7 @@ async function libraryInit() {
     console.error(error.message);
   } finally {
     hideLoader();
+    showEl(footer);
   }
 }
 
