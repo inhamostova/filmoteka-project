@@ -63,7 +63,7 @@ npm run build
 
 ## 🌐 Live Demo
 
-https://inhamostova.github.io/filmoteka-project/
+👉 https://inhamostova.github.io/filmoteka-project/
 
 ## 👩‍💻 Author
 
