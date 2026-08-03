@@ -18,10 +18,10 @@
   text-align: center;
   line-height: calc(16 / 12);
   text-transform: uppercase;
-  color: #ffffff;
+  color: var(--white-color);
 
   background-color: transparent;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--white-color);
   border-radius: 5px;
   cursor: pointer;
 
@@ -36,7 +36,7 @@
 }
 
 .btn--active {
-  background-color: #ff6b01;
+  background-color: var(--accent-main-color);
   box-shadow: 0 8px 43px 0 rgba(255, 107, 1, 0.6);
   border: none;
 }

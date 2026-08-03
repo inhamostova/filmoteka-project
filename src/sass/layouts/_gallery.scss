@@ -71,7 +71,7 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #ff6b08;
+  color: var(--accent-secondary-color);
 
   @media screen and (min-width: 1280px) {
     font-size: 20px;
@@ -93,7 +93,7 @@
     display: block;
     width: 1px;
     height: 10px;
-    background-color: #ff6b08;
+    background-color: var(--accent-secondary-color);
 
     @media screen and (min-width: 1280px) {
       width: 2px;
@@ -110,7 +110,7 @@
   height: 16px;
   font-size: 12px;
   line-height: calc(16 / 12);
-  background-color: #ff6b01;
+  background-color: var(--accent-main-color);
   border-radius: 5px;
-  color: #ffffff;
+  color: var(--white-color);
 }
