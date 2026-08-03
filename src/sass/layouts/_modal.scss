@@ -92,16 +92,26 @@
   position: absolute;
   right: 8px;
   top: 8px;
-  width: 30px;
-  height: 30px;
-  display: inline-flex;
-  background-image: url('../images/modal/close.svg');
+
   background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
   border: none;
   cursor: pointer;
+}
+
+.modal__close-btn__icon {
+  width: 30px;
+  height: 30px;
+  color: var(--main-txt-color);
+
+  transition: color var(--transition);
+
+  &:hover {
+    color: var(--accent-secondary-color);
+  }
+
+  & use {
+    stroke: currentColor;
+  }
 }
 
 .modal__poster {

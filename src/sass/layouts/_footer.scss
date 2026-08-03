@@ -40,6 +40,21 @@
   }
 }
 
+.footer-info__icon {
+  width: 14px;
+  height: 13px;
+  color: var(--accent-secondary-color);
+  transition: transform var(--transition);
+
+  &:hover {
+    transform: scale(1.4);
+  }
+
+  & use {
+    fill: currentColor;
+  }
+}
+
 .footer-info__link {
   text-decoration: underline;
 }

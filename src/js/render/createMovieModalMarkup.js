@@ -1,5 +1,6 @@
 import { sliceNum } from '../helpers/helpers';
 import { makeGenresListInModal } from '../helpers/makeGenresInModal';
+import sprite from '../../images/icons/sprite.svg';
 
 const BASE_IMG_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -15,7 +16,8 @@ export function createMovieModalMarkup(movie) {
     overview,
   } = movie;
 
-  return `<button class="modal__close-btn" aria-label="Close" type="button"></button>
+  return `<button class="modal__close-btn" aria-label="Close" type="button">
+  <svg class="modal__close-btn__icon"><use href="${sprite}#close"></use></svg></button>
 <div class="modal__left-side"><img class="modal__poster" src="${BASE_IMG_URL}${poster_path}" alt="${original_title}"/></div>
 <div class="modal__right-side">
     <h2 class="modal__title">${title}</h2>
