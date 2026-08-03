@@ -17,7 +17,7 @@ export function createMovieModalMarkup(movie) {
   } = movie;
 
   return `<button class="modal__close-btn" aria-label="Close" type="button">
-  <svg class="modal__close-btn__icon"><use href="${sprite}#close"></use></svg></button>
+  <svg class="modal__close-icon"><use href="${sprite}#close"></use></svg></button>
 <div class="modal__left-side"><img class="modal__poster" src="${BASE_IMG_URL}${poster_path}" alt="${original_title}"/></div>
 <div class="modal__right-side">
     <h2 class="modal__title">${title}</h2>
