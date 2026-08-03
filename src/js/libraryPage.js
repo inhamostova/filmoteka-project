@@ -4,7 +4,8 @@ import { fetchGenres } from './services/movies-api';
 import { hideLoader, showLoader } from './helpers/loader';
 import { onGalleryClick } from './movieModal';
 import { setActivePage, setCurrentLibraryBtn } from './state';
-import { hideEl, renderEmptyState, showEl } from './helpers/helpers';
+import { hideEl, showEl } from './helpers/helpers';
+import { renderEmptyState } from './render/renderEmptyState';
 
 const btnWatched = document.querySelector('[data-btn="watched"]');
 const btnQueue = document.querySelector('[data-btn="queue"]');
@@ -30,7 +31,6 @@ async function libraryInit() {
       renderEmptyState(gallery);
     } else {
       gallery.innerHTML = createMovieCardsMarkup(watchedMovies, genresList);
-      // showEl(footer);
     }
   } catch (error) {
     console.error(error.message);

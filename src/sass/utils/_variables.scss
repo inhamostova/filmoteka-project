@@ -1,0 +1,20 @@
+:root {
+  // colors vars
+  --main-txt-color: #000000;
+  --accent-main-color: #ff6b01;
+  --accent-secondary-color: #ff6b08;
+  --white-color: #ffffff;
+  --red-color: #ff001b;
+  --grey-color: #8c8c8c;
+  --grey-bg-color: #f7f7f7;
+  --footer-text-color: #545454;
+  --modal-backdrop-color: rgba(0, 0, 0, 0.56);
+
+  //   transition
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  //   breakpoints
+  --mobile: 320px;
+  --tablet: 768px;
+  --desktop: 1280px;
+}

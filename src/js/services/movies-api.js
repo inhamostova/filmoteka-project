@@ -1,15 +1,7 @@
-import axios from 'axios';
-
-const BASE_URL = 'https://api.themoviedb.org/3';
-const API_TOKEN =
-  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5MTdiNGRiMmFiZTcwNGY0Njk1NjdhNmZjZTM4NzA5NyIsIm5iZiI6MTY3MTEzNTI3NC4yNDEsInN1YiI6IjYzOWI4MDJhY2I5ZjRiMDBiMWQ3MDU0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.QzbVo_qbZnszsGvllQ67Bu45o2b6F5lCxocbnK73Lck';
+import tmdbApi from './tmdbApi';
 
 export async function fetchTrendingMovies(page = 1) {
-  const { data } = await axios.get(`${BASE_URL}/trending/movie/day`, {
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${API_TOKEN}`,
-    },
+  const { data } = await tmdbApi.get('/trending/movie/day', {
     params: {
       language: 'en-US',
       page,
@@ -19,11 +11,7 @@ export async function fetchTrendingMovies(page = 1) {
 }
 
 export async function fetchGenres() {
-  const { data } = await axios.get(`${BASE_URL}/genre/movie/list`, {
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${API_TOKEN}`,
-    },
+  const { data } = await tmdbApi.get('/genre/movie/list', {
     params: {
       language: 'en-US',
     },
@@ -32,11 +20,7 @@ export async function fetchGenres() {
 }
 
 export async function fetchMoviesByQuery(query, page = 1) {
-  const { data } = await axios.get(`${BASE_URL}/search/movie`, {
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${API_TOKEN}`,
-    },
+  const { data } = await tmdbApi.get(`/search/movie`, {
     params: {
       query,
       language: 'en-US',
@@ -47,11 +31,7 @@ export async function fetchMoviesByQuery(query, page = 1) {
 }
 
 export async function fetchMovieById(movieId) {
-  const res = await axios.get(`${BASE_URL}/movie/${movieId}`, {
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${API_TOKEN}`,
-    },
+  const res = await tmdbApi.get(`/movie/${movieId}`, {
     params: {
       language: 'en-US',
     },

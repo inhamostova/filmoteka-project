@@ -23,24 +23,24 @@
 
   text-decoration: none;
 
-  color: #000;
+  color: var(--main-txt-color);
 
-  transition: background-color 250ms ease;
+  transition: background-color var(--transition);
 
   &:hover {
-    background-color: #f7f7f7;
+    background-color: var(--grey-bg-color);
   }
 
   &.tui-is-selected:hover {
-    background-color: #ff6b08;
-    color: white;
+    background-color: var(--accent-secondary-color);
+    color: var(--white-color);
   }
 }
 
 .tui-is-selected {
   width: 40px;
-  background-color: #ff6b08;
-  color: white;
+  background-color: var(--accent-secondary-color);
+  color: var(--white-color);
 }
 
 .tui-is-disabled {
@@ -57,7 +57,7 @@
 
 .tui-prev,
 .tui-next {
-  background-color: #f7f7f7;
+  background-color: var(--grey-bg-color);
   background-repeat: no-repeat;
   background-position: center;
 }

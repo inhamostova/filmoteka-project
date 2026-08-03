@@ -1,5 +1,5 @@
 .footer {
-  background-color: #f7f7f7;
+  background-color: var(--grey-bg-color);
 
   &.footer--empty-state {
     position: absolute;
@@ -15,7 +15,7 @@
   font-size: 14px;
   line-height: calc(16 / 14);
   font-weight: 400;
-  color: #545454;
+  color: var(--footer-text-color);
   text-align: center;
 
   @media screen and (min-width: 768px) {

@@ -13,7 +13,6 @@ async function onGalleryClick(evt) {
 
   try {
     const { data } = await fetchMovieById(id);
-    console.log(data);
   } catch (error) {
     console.error(error.message);
   }

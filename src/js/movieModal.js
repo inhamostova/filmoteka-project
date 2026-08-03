@@ -11,7 +11,7 @@ import {
 import { hideLoader, showLoader } from './helpers/loader';
 import { createMovieCardsMarkup } from './render/movieCardsMarkup';
 import { getActivePage, getCurrentLibraryBtn } from './state';
-import { renderEmptyState } from './helpers/helpers';
+import { renderEmptyState } from './render/renderEmptyState';
 
 const gallery = document.querySelector('.js-gallery');
 const modal = document.querySelector('.modal');

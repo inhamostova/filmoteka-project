@@ -18,19 +18,28 @@
   padding-bottom: 4px;
   background-color: transparent;
   border: none;
-  border-bottom: 0.5px solid #ffffff;
-  color: #ffffff;
+  border-bottom: 0.5px solid var(--white-color);
+  color: var(--white-color);
 
   &::placeholder {
     font-size: 14px;
     line-height: calc(16 / 14);
     font-weight: 400;
-    color: #ffffff;
+    color: var(--white-color);
   }
 
   &:focus {
     outline: none;
   }
+}
+
+.search-form__input:-webkit-autofill,
+.search-form__input:-webkit-autofill:hover,
+.search-form__input:-webkit-autofill:focus,
+.search-form__input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--white-color);
+  -webkit-box-shadow: 0 0 0 1000px transparent inset;
+  transition: background-color 9999s ease-in-out 0s;
 }
 
 .search-form__btn {
