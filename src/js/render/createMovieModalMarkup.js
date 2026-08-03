@@ -15,7 +15,7 @@ export function createMovieModalMarkup(movie) {
     overview,
   } = movie;
 
-  return `<button class="modal__close-btn" type="button"></button>
+  return `<button class="modal__close-btn" aria-label="Close" type="button"></button>
 <div class="modal__left-side"><img class="modal__poster" src="${BASE_IMG_URL}${poster_path}" alt="${original_title}"/></div>
 <div class="modal__right-side">
     <h2 class="modal__title">${title}</h2>
