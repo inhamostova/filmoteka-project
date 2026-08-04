@@ -23,20 +23,14 @@ async function libraryInit() {
   setActivePage('library');
   setCurrentLibraryBtn('watched');
   showLoader();
-  hideEl(footer);
   try {
     genresList = await fetchGenres();
 
-    if (!watchedMovies.length) {
-      renderEmptyState(gallery);
-    } else {
-      gallery.innerHTML = createMovieCardsMarkup(watchedMovies, genresList);
-    }
+    renderLibraryMovies(getMovies(STORAGE_KEYS.WATCHED));
   } catch (error) {
     console.error(error.message);
   } finally {
     hideLoader();
-    showEl(footer);
   }
 }
 
@@ -44,31 +38,35 @@ btnQueue.addEventListener('click', onBtnQueueClick);
 btnWatched.addEventListener('click', onBtnWatchedClick);
 
 function onBtnQueueClick() {
-  const queueMovies = getMovies(STORAGE_KEYS.QUEUE);
   updateActiveButton('queue');
   setCurrentLibraryBtn('queue');
 
-  if (!queueMovies.length) {
-    renderEmptyState(gallery);
-  } else {
-    gallery.innerHTML = createMovieCardsMarkup(queueMovies, genresList);
-  }
+  renderLibraryMovies(getMovies(STORAGE_KEYS.QUEUE));
 }
 
 function onBtnWatchedClick() {
-  const watchedMovies = getMovies(STORAGE_KEYS.WATCHED);
   updateActiveButton('watched');
   setCurrentLibraryBtn('watched');
 
-  if (!watchedMovies.length) {
-    renderEmptyState(gallery);
-  } else {
-    gallery.innerHTML = createMovieCardsMarkup(watchedMovies, genresList);
-  }
+  renderLibraryMovies(getMovies(STORAGE_KEYS.WATCHED));
 }
 
 function updateActiveButton(type) {
   btnWatched.classList.toggle('btn--active', type === 'watched');
 
   btnQueue.classList.toggle('btn--active', type === 'queue');
+}
+
+function renderLibraryMovies(movies) {
+  hideEl(footer);
+
+  if (!movies.length) {
+    renderEmptyState(gallery);
+  } else {
+    gallery.innerHTML = createMovieCardsMarkup(movies, genresList);
+  }
+
+  requestAnimationFrame(() => {
+    showEl(footer);
+  });
 }

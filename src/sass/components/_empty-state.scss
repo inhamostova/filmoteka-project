@@ -4,8 +4,10 @@
 
 .gallery__empty-state__img {
   width: 280px;
+  height: 210px;
 
   @media screen and (min-width: 768px) {
-    width: 552px;
+    width: 736px;
+    height: 552px;
   }
 }
