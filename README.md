@@ -1,5 +1,7 @@
 # 🎬 Filmoteka
 
+![Filmoteka project](./assets/filmoteka.png)
+
 Filmoteka is a responsive web application for browsing, searching, and managing
 a personal movie library using **The Movie Database (TMDB) API**.
 
