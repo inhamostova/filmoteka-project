@@ -19,7 +19,6 @@ let genresList = [];
 libraryInit();
 
 async function libraryInit() {
-  const watchedMovies = getMovies(STORAGE_KEYS.WATCHED);
   setActivePage('library');
   setCurrentLibraryBtn('watched');
   showLoader();
